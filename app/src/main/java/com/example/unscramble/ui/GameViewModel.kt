@@ -41,6 +41,11 @@ class GameViewModel : ViewModel() {
         updateUserGuess("")
     }
 
+    fun skipWord(){
+        updateGameState(_uiState.value.score)
+        updateUserGuess("")
+    }
+
     private fun updateGameState(updatedScore: Int){
         //prepare the game for the next round
         _uiState.update {
