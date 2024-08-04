@@ -69,6 +69,22 @@ class GameViewModelTest {
         assertTrue(currentGameUiState.isGameOver)
     }
 
+    @Test
+    fun gameViewModel_WordSkipped_ScoreUnchangedAndWordCountIncreased(){
+        var currentGameUiState = viewModel.uiState.value
+        val correctPlayerWord = getUnscrambledWord(currentGameUiState.currentScrambleWord)
+        viewModel.updateUserGuess(correctPlayerWord)
+        viewModel.checkUserGuess()
+
+        currentGameUiState = viewModel.uiState.value
+        val lastWordCount= currentGameUiState.currentWordCount
+        viewModel.skipWord()
+
+        currentGameUiState = viewModel.uiState.value
+        assertEquals(lastWordCount + 1, currentGameUiState.currentWordCount)
+        assertEquals(SCORE_AFTER_FIRST_CORRECT_ANSWER, currentGameUiState.score)
+    }
+
     companion object {
         private const val SCORE_AFTER_FIRST_CORRECT_ANSWER = SCORE_INCREASE
     }
